@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CONNEXGROW WEBINAR PAYMENT</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            color: #010f1c;
+            font-family: "Jost", sans-serif;
+        }
+
+        body {
+            background: #efefef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            width: 100%;
+        }
+
+        section {
+            max-width: 95%;
+            max-height: 90vh;
+            width: 600px;
+            background: #fff;
+            padding: 40px;
+            overflow-y: auto;
+            border-top: 10px solid #3eff09;
+        }
+
+        .flex {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .flex input {
+            border: none;
+            outline: none;
+            padding: 0px 20px;
+            height: 50px;
+            width: 100%;
+            border: 1px solid #e8e8e8;
+        }
+
+        .m10 {
+            margin-top: 10px;
+        }
+
+        .m20 {
+            margin-top: 20px;
+        }
+
+        button {
+            width: 200px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            height: 50px;
+            background: #36ff09;
+            color: #fff;
+            padding: 0px 20px;
+        }
+
+        input:focus {
+            border: 1px solid #3aff09;
+        }
+
+        button:hover {
+            background: #04f023;
+        }
+
+        .get_qr {
+            height: 200px;
+            width: 200px;
+            border: 1px solid #999;
+            background: #efefef;
+        }
+
+        .qr_code {
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+
+        p {
+            color: #7a7a7a;
+            font-size: 16px;
+            line-height: 24px;
+        }
+
+        .im {
+            max-width: 100%;
+            width: 300px;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .timer {
+            font-size: 18px;
+            color: #333;
+            margin-top: 20px;
+        }
+
+        .disclaimer {
+            font-size: 14px;
+            color: #f80303;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .payment-status {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .warning {
+            color: #f80303;
+            font-size: 14px;
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            const paymentAmount = 1; // Replace 1 with the amount you want users to pay
+            const scriptUrl = 'https://script.google.com/macros/s/AKfycbwhj8SUNycXcbmRiNi6eZLLKVWIbGcg--18tEch1D746l3ntGuAl1XHLW2wMM4in2c/exec'; // Replace with your deployed Google Apps Script URL
+
+            function validateFields() {
+                let isValid = true;
+
+                $(".form input").each(function() {
+                    if ($(this).val().trim() === "") {
+                        $(this).next(".error").show();
+                        isValid = false;
+                    } else {
+                        $(this).next(".error").hide();
+                    }
+                });
+
+                return isValid;
+            }
+
+            function validateEmail(email) {
+                const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+                return emailPattern.test(email);
+            }
+
+            function submitForm() {
+                $.ajax({
+                    url: scriptUrl,
+                    method: 'POST',
+                    data: $(".form").serialize(),
+                    dataType: 'text',
+                    success: function(response) {
+                        if (response.includes('Success')) {
+                            window.location.href = "thank_you.html"; // Redirect to thank you page
+                        } else {
+                            alert("There was an error submitting the form. Please try again.");
+                        }
+                    },
+                    error: function() {
+                        alert("There was an error submitting the form. Please try again.");
+                    }
+                });
+            }
+
+            $(".generate_qr").click(function(event) {
+                event.preventDefault(); // Prevent form submission
+                if (validateFields()) {
+                    const emailField = $('input[name="email"]');
+                    const emailError = $('.email-error');
+
+                    // Validate the email field
+                    if (!validateEmail(emailField.val())) {
+                        emailError.show();
+                        emailField.focus();
+                        return;
+                    } else {
+                        emailError.hide();
+                    }
+
+                    $(".form").hide();
+                    $(".qr_code").show();
+                    var link = `upi://pay?pa=9471314033@ybl&am=${paymentAmount}&tn=Payment for Webinar&pn=ConnexGrow`;
+                    var upi = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(link)}`;
+                    $(".get_qr").attr("src", upi);
+
+                    // Show warning message
+                    $(".warning").html(`
+                        <p>Please note: If you press 'DONE' without completing the payment, it will not be accepted. We will verify every transaction from our bank statements. Please ensure all details are filled correctly. If you think you have entered something wrong before making the payment, kindly refresh the page.</p>
+                        <p>We are not using other brands' payment gateways as this would increase the cost of our webinars. Therefore, we have developed our own payment process to keep prices affordable for you.</p>
+                    `).show();
+
+                    // Start a 5-minute countdown timer
+                    var timerDuration = 5 * 60 * 1000; // 5 minutes in milliseconds
+                    var endTime = Date.now() + timerDuration;
+
+                    function updateTimer() {
+                        var now = Date.now();
+                        var remaining = endTime - now;
+
+                        if (remaining <= 0) {
+                            clearInterval(timerInterval);
+                            $(".timer").text("Time's up!");
+                            submitForm(); // Submit the form after timer ends
+                        } else {
+                            var minutes = Math.floor(remaining / 60000);
+                            var seconds = Math.floor((remaining % 60000) / 1000);
+                            $(".timer").text(`${minutes}m ${seconds}s`);
+                        }
+                    }
+
+                    var timerInterval = setInterval(updateTimer, 1000);
+                    updateTimer(); // Initial call
+
+                    // Show the "Done" button and status message
+                    $(".payment-status").show();
+                } else {
+                    alert("Please fill in all required fields.");
+                }
+            });
+
+            $(".done_payment").click(function(event) {
+                event.preventDefault(); // Prevent default form action
+                submitForm();
+            });
+        });
+    </script>
+</head>
+<body>
+    <section>
+        <h1>CONNEXGROW WEBINAR PAYMENT</h1>
+        <p class="disclaimer">
+            Please ensure all details are filled in accurately. ConnexGrow is not responsible for any issues or losses that may arise from incorrect information provided in this form.
+        </p>
+        <form class="form">
+            <div class="flex m20">
+                <label>Full Name</label>
+                <input type="text" name="name" placeholder="Full Name" class="m10 name" required>
+                <div class="error">This field is required</div>
+            </div>
+            <div class="flex m20">
+                <label>UPI ID which you will use for payment</label>
+                <input type="text" name="upi" placeholder="Ex- UPI ID" class="m10 number" required>
+                <div class="error">This field is required</div>
+            </div>
+            <div class="flex m20">
+                <label>WhatsApp Number</label>
+                <input type="text" name="connex_email" placeholder="Ex- your.email@example.com" class="m10 connex_email" required>
+                <div class="error">This field is required</div>
+            </div>
+            <div class="flex m20">
+                <label>Email(for delivery of certificate)</label>
+                <input type="text" name="email" placeholder="Ex- your.email@example.com" class="m10 email" required>
+                <div class="error email-error">Please enter a valid email</div>
+            </div>
+            
+          
+            </div>
+            <button class="generate_qr">NEXT</button>
+        </form>
+        <div class="qr_code">
+            <img src="" alt="QR Code" class="get_qr qr">
+            <p class="timer"></p>
+            <div class="payment-status">
+                <button class="done_payment">DONE</button>
+            </div>
+            <div class="warning"></div>
+        </div>
+    </section>
+</body>
+</html>
+https://docs.google.com/spreadsheets/d/1kakTF_tncUYESJzrrvmYo6w7GMHmfY2PbfKzcOqdeI8/edit?usp=sharing
