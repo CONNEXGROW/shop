@@ -39,7 +39,7 @@ header {
 }
 
 .product-image {
-    max-width: 100%; /* Make the image responsive */
+    max-width: 75%; /* Make the image responsive */
     height: auto; /* Maintain aspect ratio */
     border-radius: 5px; /* Rounded corners for images */
 }
