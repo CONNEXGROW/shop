@@ -52,18 +52,21 @@
             <h3>Book 1</h3>
             <p>Price: ₹999</p>
             <button class="buy-button" data-file="BOOK.html">Buy Now</button>
+            <button class="view-button" data-link="https://docs.google.com/document/d/1viyuGw9Hlj54DwwCdEqJpGZrTZgWoqbQKzG9IUgFNgQ/edit?usp=sharing">View Now</button>
         </div>
         <div class="product">
             <img src="" alt=" " class="product-image">
             <h3>Book 2</h3>
             <p>Price: ₹1999</p>
             <button class="buy-button" data-file="yo.html">Buy Now</button>
+            <button class="view-button" data-link="https://example.com/book2">View Now</button>
         </div>
         <div class="product">
             <img src="" alt=" " class="product-image">
             <h3>Book 3</h3>
             <p>Price: ₹4999</p>
             <button class="buy-button" data-file="https://yourpaymentgateway.com/pay?amount=4999&product_name=Microsoft%20Office%20365">Buy Now</button>
+            <button class="view-button" data-link="https://example.com/book3">View Now</button>
         </div>
     </section>
 
@@ -85,11 +88,20 @@
         var iframe = document.getElementById('modal-iframe');
         var span = document.getElementsByClassName('close')[0];
 
-        // Open modal and load HTML in iframe
+        // Open modal and load HTML in iframe for Buy Now buttons
         document.querySelectorAll('.buy-button').forEach(function(button) {
             button.onclick = function() {
                 var file = this.getAttribute('data-file');
                 iframe.src = file;
+                modal.style.display = 'block';
+            };
+        });
+
+        // Open modal and load link in iframe for View Now buttons
+        document.querySelectorAll('.view-button').forEach(function(button) {
+            button.onclick = function() {
+                var link = this.getAttribute('data-link');
+                iframe.src = link;
                 modal.style.display = 'block';
             };
         });
