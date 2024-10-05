@@ -97,12 +97,11 @@
             };
         });
 
-        // Open modal and load link in iframe for View Now buttons
+        // Open link in a new tab for View Now buttons
         document.querySelectorAll('.view-button').forEach(function(button) {
             button.onclick = function() {
                 var link = this.getAttribute('data-link');
-                iframe.src = link;
-                modal.style.display = 'block';
+                window.open(link, '_blank'); // Open in a new tab
             };
         });
 
