@@ -4,61 +4,280 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexgrow Store</title>
-    <link rel="stylesheet" href="styles.css">
     <style>
-        /* Modal styling */
+        :root {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --primary-color: #2ECC71;
+            --secondary-color: #27AE60;
+            --accent-color: #16A085;
+            --card-bg: #1e1e1e;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background-color 0.3s ease;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: var(--bg-color);
+            text-align: center;
+            padding: 2rem 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                var(--primary-color),
+                var(--secondary-color)
+            );
+            transform: rotate(-10deg);
+            z-index: 0;
+        }
+
+        #search-bar {
+            margin: 2rem auto;
+            text-align: center;
+            max-width: 600px;
+            padding: 0 1rem;
+        }
+
+        #search-input {
+            padding: 0.75rem;
+            width: calc(100% - 120px);
+            border: none;
+            border-radius: 25px 0 0 25px;
+            font-size: 1rem;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            outline: none;
+        }
+
+        #search-button {
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary-color);
+            color: var(--bg-color);
+            border: none;
+            border-radius: 0 25px 25px 0;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #search-button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .product-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 2rem 1rem;
+            justify-items: center;
+        }
+
+        .product {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 1.5rem;
+            width: 100%;
+            max-width: 300px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .product:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .product img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .product h3 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+        }
+
+        .product p {
+            font-size: 1rem;
+            color: var(--text-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .buy-button, .view-button {
+            background-color: var(--primary-color);
+            color: var(--bg-color);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            margin: 0.5rem;
+            width: calc(100% - 1rem);
+            max-width: 200px;
+        }
+
+        .buy-button:hover, .view-button:hover {
+            background-color: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
         .modal {
             display: none;
             position: fixed;
-            z-index: 1;
+            z-index: 1000;
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.8);
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
+
         .modal-content {
-            background-color: white;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 600px;
+            background-color: var(--card-bg);
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 800px;
             height: 80%;
-            overflow-y: auto;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
         }
+
+        .modal.show {
+            opacity: 1;
+        }
+
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+
         .close {
-            color: #aaa;
+            color: var(--text-color);
             float: right;
-            font-size: 28px;
+            font-size: 2rem;
             font-weight: bold;
-        }
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
             cursor: pointer;
+            transition: color 0.3s ease;
         }
-        /* Product styling */
-        .product-list {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            padding: 20px;
+
+        .close:hover {
+            color: var(--accent-color);
         }
-        .product {
-            margin: 20px;
+
+        #modal-iframe {
+            width: 100%;
+            height: calc(100% - 40px);
+            border: none;
+            border-radius: 10px;
+        }
+
+        footer {
+            background-color: var(--card-bg);
+            color: var(--text-color);
             text-align: center;
+            padding: 1rem;
+            margin-top: 2rem;
         }
-        .product img {
-            max-width: 200px;
-            height: auto;
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            #search-input {
+                width: calc(100% - 100px);
+            }
+
+            #search-button {
+                padding: 0.75rem 1rem;
+            }
+
+            .product-list {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                padding: 10px;
+            }
+
+            .product {
+                max-width: none;
+                width: calc(50% - 20px);
+                margin: 10px;
+            }
+
+            .modal-content {
+                width: 90%;
+                margin: 10% auto;
+            }
         }
-        .buy-button, .view-button {
-            margin: 10px;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            #search-input {
+                width: 60%;
+                border-radius: 25px;
+                margin-bottom: 1rem;
+            }
+
+            #search-button {
+                width: 35%;
+                border-radius: 25px;
+            }
+
+            .product-list {
+                grid-template-columns: 1fr;
+            }
+
+            .product {
+                width: 100%;
+                margin: 10px 0;
+            }
+
+            .buy-button, .view-button {
+                width: 100%;
+                max-width: none;
+            }
         }
     </style>
 </head>
@@ -67,36 +286,36 @@
         <h1>Welcome to the Connexgrow Store</h1>
     </header>
 
+    <div id="search-bar">
+        <input type="text" id="search-input" placeholder="Search for a product...">
+        <button id="search-button">Search</button>
+    </div>
+
     <section id="product-list" class="product-list">
         <div class="product">
-            <img src="IMG_20240928_231201.jpg" alt=" " class="product-image">
+            <img src="IMG_20240928_231201.jpg" alt="Book 1" class="product-image">
             <h3>Book 1</h3>
             <p>Price: ₹39</p>
             <button class="buy-button" data-file="BOOK.html">Buy Now</button>
-<!--         <button class="view-button" data-link="https://connexgrow.github.io/firebase/">View Now</button>  -->
-            
         </div>
         <div class="product">
-            <img src="Gemini_Generated_Image_49han349han349ha (1).jpeg" alt=" " class="product-image">
+            <img src="Gemini_Generated_Image_49han349han349ha (1).jpeg" alt="Coming Soon" class="product-image">
             <h3>Coming Soon..</h3>
             <p>Price: ₹25</p>
             <button class="buy-button" data-file="yo.html">Buy Now</button>
-<!--           <button class="view-button" data-link="https://connexgrow.github.io/CONNEX/">View Now</button> -->
         </div>
         <div class="product">
-            <img src="Gemini_Generated_Image_49han349han349ha (1).jpeg" alt=" " class="product-image">
+            <img src="Gemini_Generated_Image_49han349han349ha (1).jpeg" alt="Coming Soon" class="product-image">
             <h3>Coming Soon..</h3>
             <p>Price: ₹49</p>
             <button class="buy-button" data-file="https://yourpaymentgateway.com/pay?amount=4999&product_name=Microsoft%20Office%20365">Buy Now</button>
-<!--             <button class="view-button" data-link="https://example.com/book3">View Now</button>  -->
         </div>
     </section>
 
-    <!-- Modal structure -->
     <div id="modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <iframe id="modal-iframe" src="" width="100%" height="100%" frameborder="0"></iframe>
+            <iframe id="modal-iframe" src="" frameborder="0"></iframe>
         </div>
     </div>
 
@@ -105,41 +324,57 @@
     </footer>
 
     <script>
-        // Get modal elements
         var modal = document.getElementById('modal');
         var iframe = document.getElementById('modal-iframe');
         var span = document.getElementsByClassName('close')[0];
 
-        // Open modal and load HTML in iframe for Buy Now buttons
         document.querySelectorAll('.buy-button').forEach(function(button) {
             button.onclick = function() {
                 var file = this.getAttribute('data-file');
                 iframe.src = file;
                 modal.style.display = 'block';
+                setTimeout(() => modal.classList.add('show'), 10);
             };
         });
 
-        // Open link in a new tab for View Now buttons
-        document.querySelectorAll('.view-button').forEach(function(button) {
-            button.onclick = function() {
-                var link = this.getAttribute('data-link');
-                window.open(link, '_blank'); // Open in a new tab
-            };
-        });
-
-        // Close modal when 'x' is clicked
         span.onclick = function() {
-            modal.style.display = 'none';
-            iframe.src = ''; // Clear the iframe when closed
+            closeModal();
         };
 
-        // Close modal when clicking outside of the modal content
         window.onclick = function(event) {
             if (event.target == modal) {
-                modal.style.display = 'none';
-                iframe.src = ''; // Clear the iframe when closed
+                closeModal();
             }
         };
+
+        function closeModal() {
+            modal.classList.remove('show');
+            setTimeout(() => {
+                modal.style.display = 'none';
+                iframe.src = '';
+            }, 300);
+        }
+
+        function searchProducts() {
+            var input = document.getElementById('search-input').value.toLowerCase();
+            var products = document.getElementsByClassName('product');
+
+            for (var i = 0; i < products.length; i++) {
+                var title = products[i].getElementsByTagName('h3')[0].innerText.toLowerCase();
+                if (title.includes(input)) {
+                    products[i].style.display = "";
+                } else {
+                    products[i].style.display = "none";
+                }
+            }
+        }
+
+        document.getElementById('search-button').addEventListener('click', searchProducts);
+        document.getElementById('search-input').addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                searchProducts();
+            }
+        });
     </script>
 </body>
 </html>
