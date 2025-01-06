@@ -174,18 +174,32 @@
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
         }
 
-        .product img {
+        /* Flexible Image Container */
+        .product-image-container {
+            position: relative;
             width: 100%;
-            height: 200px; /* Fixed height */
-            object-fit: cover; /* Ensures the image covers the area without distortion */
+            padding-top: 100%; /* 1:1 Aspect Ratio (Square) */
+            overflow: hidden;
             border-radius: 10px;
-            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Ensures the entire image is visible */
+            border-radius: 10px;
         }
 
         .product h3 {
             font-size: 1.5rem;
             color: var(--primary-color);
-            margin-top: 0;
+            margin-top: 1rem;
             margin-bottom: 0.5rem;
         }
 
@@ -358,19 +372,25 @@
 
     <section id="product-list" class="product-list">
         <div class="product">
-            <img src="IMG_20240928_231201.jpg" alt="Book 1" class="product-image">
+            <div class="product-image-container">
+                <img src="IMG_20240928_231201.jpg" alt="Book 1" class="product-image">
+            </div>
             <h3>Book 1</h3>
             <p>Price: ₹39</p>
             <button class="buy-button" data-file="BOOK.html">Buy Now</button>
         </div>
         <div class="product">
-            <img src="Gemini_Generated_Image_49han349han349ha (1).jpeg" alt="Coming Soon" class="product-image">
+            <div class="product-image-container">
+                <img src="Gemini_Generated_Image_49han349han349ha (1).jpeg" alt="Coming Soon" class="product-image">
+            </div>
             <h3>Coming Soon..</h3>
             <p>Price: ₹25</p>
             <button class="buy-button" data-file="yo.html">Buy Now</button>
         </div>
         <div class="product">
-            <img src="Gemini_Generated_Image_49han349han349ha (1).jpeg" alt="Coming Soon" class="product-image">
+            <div class="product-image-container">
+                <img src="Gemini_Generated_Image_49han349han349ha (1).jpeg" alt="Coming Soon" class="product-image">
+            </div>
             <h3>Coming Soon..</h3>
             <p>Price: ₹49</p>
             <button class="buy-button" data-file="https://yourpaymentgateway.com/pay?amount=4999&product_name=Microsoft%20Office%20365">Buy Now</button>
