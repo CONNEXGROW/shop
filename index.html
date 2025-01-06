@@ -28,6 +28,12 @@
             transition: background-color 0.3s ease;
         }
 
+        body.light-mode {
+            --bg-color: #ffffff;
+            --text-color: #121212;
+            --card-bg: #f0f0f0;
+        }
+
         header {
             background-color: var(--primary-color);
             color: var(--bg-color);
@@ -58,6 +64,57 @@
             );
             transform: rotate(-10deg);
             z-index: 0;
+        }
+
+        /* Floating Toggle Switch */
+        .theme-switch-wrapper {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .theme-switch {
+            display: inline-block;
+            height: 34px;
+            position: relative;
+            width: 60px;
+        }
+
+        .theme-switch input {
+            display: none;
+        }
+
+        .slider {
+            background-color: #ccc;
+            bottom: 0;
+            cursor: pointer;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: 0.4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            background-color: #fff;
+            bottom: 4px;
+            content: "";
+            height: 26px;
+            left: 4px;
+            position: absolute;
+            transition: 0.4s;
+            width: 26px;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
         }
 
         #search-bar {
@@ -282,6 +339,14 @@
     </style>
 </head>
 <body>
+    <!-- Floating Toggle Switch -->
+    <div class="theme-switch-wrapper">
+        <label class="theme-switch">
+            <input type="checkbox" id="theme-toggle">
+            <span class="slider round"></span>
+        </label>
+    </div>
+
     <header>
         <h1>Welcome to the Connexgrow Store</h1>
     </header>
@@ -373,6 +438,30 @@
         document.getElementById('search-input').addEventListener('keyup', function(event) {
             if (event.key === 'Enter') {
                 searchProducts();
+            }
+        });
+
+        // Toggle Theme
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+
+        // Check for saved theme in localStorage
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            body.classList.add(savedTheme);
+            if (savedTheme === 'light-mode') {
+                themeToggle.checked = true;
+            }
+        }
+
+        // Toggle theme on switch click
+        themeToggle.addEventListener('change', function() {
+            if (this.checked) {
+                body.classList.add('light-mode');
+                localStorage.setItem('theme', 'light-mode');
+            } else {
+                body.classList.remove('light-mode');
+                localStorage.setItem('theme', 'dark-mode');
             }
         });
     </script>
