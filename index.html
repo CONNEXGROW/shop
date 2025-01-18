@@ -66,7 +66,6 @@
             z-index: 0;
         }
 
-        /* Floating Toggle Switch */
         .theme-switch-wrapper {
             position: fixed;
             top: 20px;
@@ -174,11 +173,10 @@
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
         }
 
-        /* Flexible Image Container */
         .product-image-container {
             position: relative;
             width: 100%;
-            padding-top: 100%; /* 1:1 Aspect Ratio (Square) */
+            padding-top: 100%;
             overflow: hidden;
             border-radius: 10px;
             display: flex;
@@ -192,7 +190,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: contain; /* Ensures the entire image is visible */
+            object-fit: contain;
             border-radius: 10px;
         }
 
@@ -353,7 +351,6 @@
     </style>
 </head>
 <body>
-    <!-- Floating Toggle Switch -->
     <div class="theme-switch-wrapper">
         <label class="theme-switch">
             <input type="checkbox" id="theme-toggle">
@@ -400,7 +397,7 @@
     <div id="modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <iframe id="modal-iframe" src="" frameborder="0"></iframe>
+            <iframe id="modal-iframe" src="/placeholder.svg" frameborder="0"></iframe>
         </div>
     </div>
 
@@ -418,7 +415,10 @@
                 var file = this.getAttribute('data-file');
                 iframe.src = file;
                 modal.style.display = 'block';
-                setTimeout(() => modal.classList.add('show'), 10);
+                iframe.style.display = 'block'; // Ensure iframe is visible
+                setTimeout(() => {
+                    modal.classList.add('show');
+                }, 10);
             };
         });
 
@@ -437,6 +437,7 @@
             setTimeout(() => {
                 modal.style.display = 'none';
                 iframe.src = '';
+                iframe.style.display = 'none'; // Hide iframe when closing
             }, 300);
         }
 
@@ -461,11 +462,9 @@
             }
         });
 
-        // Toggle Theme
         const themeToggle = document.getElementById('theme-toggle');
         const body = document.body;
 
-        // Check for saved theme in localStorage
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme) {
             body.classList.add(savedTheme);
@@ -474,7 +473,6 @@
             }
         }
 
-        // Toggle theme on switch click
         themeToggle.addEventListener('change', function() {
             if (this.checked) {
                 body.classList.add('light-mode');
@@ -487,3 +485,4 @@
     </script>
 </body>
 </html>
+
