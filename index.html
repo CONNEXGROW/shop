@@ -267,10 +267,12 @@
             display: flex;
             justify-content: flex-end;
             padding-bottom: 1rem;
+            padding: 1rem;
+            background-color: var(--primary-color);
         }
 
         .close {
-            color: var(--text-color);
+            color: var(--bg-color);
             font-size: 2rem;
             font-weight: bold;
             cursor: pointer;
@@ -286,7 +288,6 @@
             width: 100%;
             height: 100%;
             border: none;
-            border-radius: 10px;
             flex-grow: 1;
         }
 
@@ -458,7 +459,7 @@
         button.onclick = function() {
             var file = this.getAttribute('data-file');
             iframe.src = file;
-            modal.style.display = 'block';
+            modal.style.display = 'flex';
             iframe.style.display = 'block';
             document.body.style.overflow = 'hidden'; // Prevent scrolling on the main page
             setTimeout(() => {
@@ -482,7 +483,6 @@
         setTimeout(() => {
             modal.style.display = 'none';
             iframe.src = '';
-            iframe.style.display = 'none';
             document.body.style.overflow = ''; // Re-enable scrolling on the main page
         }, 300);
     }
@@ -528,7 +528,7 @@
             localStorage.setItem('theme', 'dark-mode');
         }
     });
-</script>
+    </script>
 </body>
 </html>
 
