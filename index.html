@@ -246,10 +246,13 @@
             border-radius: 15px;
             width: 90%;
             max-width: 800px;
-            height: 80%;
+            max-height: 90vh;
+            overflow: hidden;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             transform: scale(0.9);
             transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
         }
 
         .modal.show {
@@ -260,13 +263,19 @@
             transform: scale(1);
         }
 
+        .close-container {
+            display: flex;
+            justify-content: flex-end;
+            padding-bottom: 1rem;
+        }
+
         .close {
             color: var(--text-color);
-            float: right;
             font-size: 2rem;
             font-weight: bold;
             cursor: pointer;
             transition: color 0.3s ease;
+            line-height: 1;
         }
 
         .close:hover {
@@ -275,9 +284,10 @@
 
         #modal-iframe {
             width: 100%;
-            height: calc(100% - 40px);
+            height: 100%;
             border: none;
             border-radius: 10px;
+            flex-grow: 1;
         }
 
         footer {
@@ -428,7 +438,9 @@
 
     <div id="modal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
+            <div class="close-container">
+                <span class="close">&times;</span>
+            </div>
             <iframe id="modal-iframe" src="/placeholder.svg" frameborder="0"></iframe>
         </div>
     </div>
@@ -438,83 +450,85 @@
     </footer>
 
     <script>
-        var modal = document.getElementById('modal');
-        var iframe = document.getElementById('modal-iframe');
-        var span = document.getElementsByClassName('close')[0];
+    var modal = document.getElementById('modal');
+    var iframe = document.getElementById('modal-iframe');
+    var span = document.getElementsByClassName('close')[0];
 
-        document.querySelectorAll('.buy-button').forEach(function(button) {
-            button.onclick = function() {
-                var file = this.getAttribute('data-file');
-                iframe.src = file;
-                modal.style.display = 'block';
-                iframe.style.display = 'block'; // Ensure iframe is visible
-                setTimeout(() => {
-                    modal.classList.add('show');
-                }, 10);
-            };
-        });
-
-        span.onclick = function() {
-            closeModal();
-        };
-
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                closeModal();
-            }
-        };
-
-        function closeModal() {
-            modal.classList.remove('show');
+    document.querySelectorAll('.buy-button').forEach(function(button) {
+        button.onclick = function() {
+            var file = this.getAttribute('data-file');
+            iframe.src = file;
+            modal.style.display = 'block';
+            iframe.style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Prevent scrolling on the main page
             setTimeout(() => {
-                modal.style.display = 'none';
-                iframe.src = '';
-                iframe.style.display = 'none'; // Hide iframe when closing
-            }, 300);
+                modal.classList.add('show');
+            }, 10);
+        };
+    });
+
+    span.onclick = function() {
+        closeModal();
+    };
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            closeModal();
         }
+    };
 
-        function searchProducts() {
-            var input = document.getElementById('search-input').value.toLowerCase();
-            var products = document.getElementsByClassName('product');
+    function closeModal() {
+        modal.classList.remove('show');
+        setTimeout(() => {
+            modal.style.display = 'none';
+            iframe.src = '';
+            iframe.style.display = 'none';
+            document.body.style.overflow = ''; // Re-enable scrolling on the main page
+        }, 300);
+    }
 
-            for (var i = 0; i < products.length; i++) {
-                var title = products[i].getElementsByTagName('h3')[0].innerText.toLowerCase();
-                if (title.includes(input)) {
-                    products[i].style.display = "";
-                } else {
-                    products[i].style.display = "none";
-                }
-            }
-        }
+    function searchProducts() {
+        var input = document.getElementById('search-input').value.toLowerCase();
+        var products = document.getElementsByClassName('product');
 
-        document.getElementById('search-button').addEventListener('click', searchProducts);
-        document.getElementById('search-input').addEventListener('keyup', function(event) {
-            if (event.key === 'Enter') {
-                searchProducts();
-            }
-        });
-
-        const themeToggle = document.getElementById('theme-toggle');
-        const body = document.body;
-
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
-            body.classList.add(savedTheme);
-            if (savedTheme === 'light-mode') {
-                themeToggle.checked = true;
-            }
-        }
-
-        themeToggle.addEventListener('change', function() {
-            if (this.checked) {
-                body.classList.add('light-mode');
-                localStorage.setItem('theme', 'light-mode');
+        for (var i = 0; i < products.length; i++) {
+            var title = products[i].getElementsByTagName('h3')[0].innerText.toLowerCase();
+            if (title.includes(input)) {
+                products[i].style.display = "";
             } else {
-                body.classList.remove('light-mode');
-                localStorage.setItem('theme', 'dark-mode');
+                products[i].style.display = "none";
             }
-        });
-    </script>
+        }
+    }
+
+    document.getElementById('search-button').addEventListener('click', searchProducts);
+    document.getElementById('search-input').addEventListener('keyup', function(event) {
+        if (event.key === 'Enter') {
+            searchProducts();
+        }
+    });
+
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+        body.classList.add(savedTheme);
+        if (savedTheme === 'light-mode') {
+            themeToggle.checked = true;
+        }
+    }
+
+    themeToggle.addEventListener('change', function() {
+        if (this.checked) {
+            body.classList.add('light-mode');
+            localStorage.setItem('theme', 'light-mode');
+        } else {
+            body.classList.remove('light-mode');
+            localStorage.setItem('theme', 'dark-mode');
+        }
+    });
+</script>
 </body>
 </html>
 
