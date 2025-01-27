@@ -12,9 +12,6 @@
             --secondary-color: #27AE60;
             --accent-color: #16A085;
             --card-bg: #1e1e1e;
-            --primary-color: #3498db;
-  --accent-color: #e74c3c;
-  --bg-color: #fff;
         }
 
         * {
@@ -291,6 +288,34 @@
             margin-top: 2rem;
         }
 
+        .price-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: #888;
+            margin-right: 0.5rem;
+        }
+
+        .new-price {
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .discount-badge {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            padding: 2px 6px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            margin-left: 0.5rem;
+        }
+
         @media (max-width: 768px) {
             header h1 {
                 font-size: 2rem;
@@ -369,22 +394,20 @@
         <input type="text" id="search-input" placeholder="Search for a product...">
         <button id="search-button">Search</button>
     </div>
-<div class="product-list">
-  <div class="product" id="book1">
-      <div class="product-image-container">
+
+    <section id="product-list" class="product-list">
+        <div class="product">
+            <div class="product-image-container">
                 <img src="IMG_20240928_231201.jpg" alt="Book 1" class="product-image">
-    <h2>Book 1</h2>
-    </div>
+            </div>
             <h3>Book 1</h3>
-            <p>Price: ₹99</p>
+            <div class="price-container">
+                <span class="original-price">₹169</span>
+                <span class="new-price">₹99</span>
+                <span class="discount-badge">41% OFF</span>
+            </div>
             <button class="buy-button" data-file="BOOK.html">Buy Now</button>
-      
-    <p>
-      <span style="text-decoration: line-through; color: #888;">₹169</span>
-      <span style="color: var(--primary-color); font-weight: bold; font-size: 1.2em; margin-left: 10px;">₹99</span>
-      <span style="background-color: var(--accent-color); color: var(--bg-color); padding: 2px 6px; border-radius: 12px; font-size: 0.8em; margin-left: 10px;">41% OFF</span>
-    </p>
-  </div>
+        </div>
         <div class="product">
             <div class="product-image-container">
                 <img src="Gemini_Generated_Image_49han349han349ha (1).jpeg" alt="Coming Soon" class="product-image">
