@@ -13,13 +13,11 @@
             --accent-color: #16A085;
             --card-bg: #1e1e1e;
         }
-
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
-
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-color);
@@ -27,13 +25,33 @@
             line-height: 1.6;
             transition: background-color 0.3s ease;
         }
-
         body.light-mode {
             --bg-color: #ffffff;
             --text-color: #121212;
             --card-bg: #f0f0f0;
         }
-
+        nav {
+            background-color: var(--primary-color);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+        nav ul li a {
+            color: var(--bg-color);
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        nav ul li a:hover {
+            color: var(--accent-color);
+        }
         header {
             background-color: var(--primary-color);
             color: var(--bg-color);
@@ -42,14 +60,12 @@
             position: relative;
             overflow: hidden;
         }
-
         header h1 {
             margin: 0;
             font-size: 2.5rem;
             position: relative;
             z-index: 1;
         }
-
         header::before {
             content: '';
             position: absolute;
@@ -65,25 +81,21 @@
             transform: rotate(-10deg);
             z-index: 0;
         }
-
         .theme-switch-wrapper {
             position: fixed;
             top: 20px;
             right: 20px;
             z-index: 1000;
         }
-
         .theme-switch {
             display: inline-block;
             height: 34px;
             position: relative;
             width: 60px;
         }
-
         .theme-switch input {
             display: none;
         }
-
         .slider {
             background-color: #ccc;
             bottom: 0;
@@ -95,7 +107,6 @@
             transition: 0.4s;
             border-radius: 34px;
         }
-
         .slider:before {
             background-color: #fff;
             bottom: 4px;
@@ -107,22 +118,18 @@
             width: 26px;
             border-radius: 50%;
         }
-
         input:checked + .slider {
             background-color: var(--primary-color);
         }
-
         input:checked + .slider:before {
             transform: translateX(26px);
         }
-
         #search-bar {
             margin: 2rem auto;
             text-align: center;
             max-width: 600px;
             padding: 0 1rem;
         }
-
         #search-input {
             padding: 0.75rem;
             width: calc(100% - 120px);
@@ -133,7 +140,6 @@
             color: var(--text-color);
             outline: none;
         }
-
         #search-button {
             padding: 0.75rem 1.5rem;
             background-color: var(--primary-color);
@@ -144,11 +150,9 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
-
         #search-button:hover {
             background-color: var(--secondary-color);
         }
-
         .product-list {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -156,7 +160,6 @@
             padding: 2rem 1rem;
             justify-items: center;
         }
-
         .product {
             background-color: var(--card-bg);
             border-radius: 15px;
@@ -167,12 +170,10 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-
         .product:hover {
             transform: translateY(-5px);
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
         }
-
         .product-image-container {
             position: relative;
             width: 100%;
@@ -183,7 +184,6 @@
             align-items: center;
             justify-content: center;
         }
-
         .product img {
             position: absolute;
             top: 0;
@@ -193,20 +193,17 @@
             object-fit: contain;
             border-radius: 10px;
         }
-
         .product h3 {
             font-size: 1.5rem;
             color: var(--primary-color);
             margin-top: 1rem;
             margin-bottom: 0.5rem;
         }
-
         .product p {
             font-size: 1rem;
             color: var(--text-color);
             margin-bottom: 1.5rem;
         }
-
         .buy-button, .view-button {
             background-color: var(--primary-color);
             color: var(--bg-color);
@@ -220,12 +217,10 @@
             width: calc(100% - 1rem);
             max-width: 200px;
         }
-
         .buy-button:hover, .view-button:hover {
             background-color: var(--secondary-color);
             transform: scale(1.05);
         }
-
         .modal {
             display: none;
             position: fixed;
@@ -238,7 +233,6 @@
             opacity: 0;
             transition: opacity 0.3s ease;
         }
-
         .modal-content {
             background-color: var(--card-bg);
             margin: 5% auto;
@@ -254,15 +248,12 @@
             display: flex;
             flex-direction: column;
         }
-
         .modal.show {
             opacity: 1;
         }
-
         .modal.show .modal-content {
             transform: scale(1);
         }
-
         .close-container {
             display: flex;
             justify-content: flex-end;
@@ -270,7 +261,6 @@
             padding: 1rem;
             background-color: var(--primary-color);
         }
-
         .close {
             color: var(--bg-color);
             font-size: 2rem;
@@ -279,18 +269,15 @@
             transition: color 0.3s ease;
             line-height: 1;
         }
-
         .close:hover {
             color: var(--accent-color);
         }
-
         #modal-iframe {
             width: 100%;
             height: 100%;
             border: none;
             flex-grow: 1;
         }
-
         footer {
             background-color: var(--card-bg);
             color: var(--text-color);
@@ -298,26 +285,22 @@
             padding: 1rem;
             margin-top: 2rem;
         }
-
         .price-container {
             display: flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 1rem;
         }
-
         .original-price {
             text-decoration: line-through;
             color: #888;
             margin-right: 0.5rem;
         }
-
         .new-price {
             color: var(--primary-color);
             font-weight: bold;
             font-size: 1.2em;
         }
-
         .discount-badge {
             background-color: var(--accent-color);
             color: var(--bg-color);
@@ -326,65 +309,58 @@
             font-size: 0.8em;
             margin-left: 0.5rem;
         }
-
         @media (max-width: 768px) {
             header h1 {
                 font-size: 2rem;
             }
-
             #search-input {
                 width: calc(100% - 100px);
             }
-
             #search-button {
                 padding: 0.75rem 1rem;
             }
-
             .product-list {
                 grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
                 padding: 10px;
             }
-
             .product {
                 max-width: none;
                 width: calc(50% - 20px);
                 margin: 10px;
             }
-
             .modal-content {
                 width: 90%;
                 margin: 10% auto;
             }
         }
-
         @media (max-width: 480px) {
             header h1 {
                 font-size: 1.5rem;
             }
-
             #search-input {
                 width: 60%;
                 border-radius: 25px;
                 margin-bottom: 1rem;
             }
-
             #search-button {
                 width: 35%;
                 border-radius: 25px;
             }
-
             .product-list {
                 grid-template-columns: 1fr;
             }
-
             .product {
                 width: 100%;
                 margin: 10px 0;
             }
-
             .buy-button, .view-button {
                 width: 100%;
                 max-width: none;
+            }
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
             }
         }
     </style>
@@ -396,22 +372,26 @@
             <span class="slider round"></span>
         </label>
     </div>
-
-    <header>
+    <nav>
+        <ul>
+            <li><a href="shop.html">Home</a></li>
+            <li><a href="terms&Conditions.html">Terms&Conditions</a></li>
+            <li><a href="Privacypolicyshop.html">Privacy Policy</a></li>
+        </ul>
+    </nav>
+    <header id="home">
         <h1>Welcome to the Connexgrow Store</h1>
     </header>
-
     <div id="search-bar">
         <input type="text" id="search-input" placeholder="Search for a product...">
         <button id="search-button">Search</button>
     </div>
-
     <section id="product-list" class="product-list">
         <div class="product">
             <div class="product-image-container">
-                <img src="IMG_20240928_231201.jpg" alt="Book 1" class="product-image">
+                <img src="IMG_20240928_231201 (1).jpg" alt="Book 1" class="product-image">
             </div>
-            <h3>Book 1</h3>
+           <h3>An Entreprenures Guide</h3>
             <div class="price-container">
                 <span class="original-price">₹169</span>
                 <span class="new-price">₹99</span>
@@ -421,22 +401,37 @@
         </div>
         <div class="product">
             <div class="product-image-container">
-                <img src="Gemini_Generated_Image_49han349han349ha (1).jpeg" alt="Coming Soon" class="product-image">
+                <img src="1.jpg" alt="Cash Flow Management" class="product-image">
             </div>
-            <h3>Coming Soon..</h3>
-            <p>Price:  ₹</p>
-            <button class="buy-button" data-file="yo.html">Buy Now</button>
+            <h3>Cash Flow Management</h3>
+            <p>Price: ₹299</p>
+            <button class="buy-button" data-file="BOOK.html">Buy Now</button>
         </div>
         <div class="product">
             <div class="product-image-container">
-                <img src="Gemini_Generated_Image_49han349han349ha (1).jpeg" alt="Coming Soon" class="product-image">
+                <img src="2.jpg" alt="Become a CEO" class="product-image">
             </div>
-            <h3>Coming Soon..</h3>
-            <p>Price: ₹</p>
-            <button class="buy-button" data-file="https://yourpaymentgateway.com/pay?amount=4999&product_name=Microsoft%20Office%20365">Buy Now</button>
+            <h3>Become a CEO</h3>
+            <p>Price: ₹99</p>
+            <button class="buy-button" data-file="BOOK.html">Buy Now</button>
+        </div>
+        <div class="product">
+            <div class="product-image-container">
+                <img src="3.jpg" alt="Work Culture" class="product-image">
+            </div>
+            <h3>Work Culture</h3>
+            <p>Price: ₹49</p>
+            <button class="buy-button" data-file="BOOK.html">Buy Now</button>
+        </div>
+        <div class="product">
+            <div class="product-image-container">
+                <img src="4.jpg" alt="Management Mastery" class="product-image">
+            </div>
+            <h3>Management Mastery</h3>
+            <p>Price: ₹199</p>
+            <button class="buy-button" data-file="BOOK.html">Buy Now</button>
         </div>
     </section>
-
     <div id="modal" class="modal">
         <div class="modal-content">
             <div class="close-container">
@@ -445,52 +440,44 @@
             <iframe id="modal-iframe" src="/placeholder.svg" frameborder="0"></iframe>
         </div>
     </div>
-
     <footer>
         <p>Contact us for inquiries and support.</p>
     </footer>
-
     <script>
     var modal = document.getElementById('modal');
     var iframe = document.getElementById('modal-iframe');
     var span = document.getElementsByClassName('close')[0];
-
     document.querySelectorAll('.buy-button').forEach(function(button) {
         button.onclick = function() {
             var file = this.getAttribute('data-file');
             iframe.src = file;
             modal.style.display = 'flex';
             iframe.style.display = 'block';
-            document.body.style.overflow = 'hidden'; // Prevent scrolling on the main page
+            document.body.style.overflow = 'hidden';
             setTimeout(() => {
                 modal.classList.add('show');
             }, 10);
         };
     });
-
     span.onclick = function() {
         closeModal();
     };
-
     window.onclick = function(event) {
         if (event.target == modal) {
             closeModal();
         }
     };
-
     function closeModal() {
         modal.classList.remove('show');
         setTimeout(() => {
             modal.style.display = 'none';
             iframe.src = '';
-            document.body.style.overflow = ''; // Re-enable scrolling on the main page
+            document.body.style.overflow = '';
         }, 300);
     }
-
     function searchProducts() {
         var input = document.getElementById('search-input').value.toLowerCase();
         var products = document.getElementsByClassName('product');
-
         for (var i = 0; i < products.length; i++) {
             var title = products[i].getElementsByTagName('h3')[0].innerText.toLowerCase();
             if (title.includes(input)) {
@@ -500,17 +487,14 @@
             }
         }
     }
-
     document.getElementById('search-button').addEventListener('click', searchProducts);
     document.getElementById('search-input').addEventListener('keyup', function(event) {
         if (event.key === 'Enter') {
             searchProducts();
         }
     });
-
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
-
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
         body.classList.add(savedTheme);
@@ -518,7 +502,6 @@
             themeToggle.checked = true;
         }
     }
-
     themeToggle.addEventListener('change', function() {
         if (this.checked) {
             body.classList.add('light-mode');
@@ -531,4 +514,3 @@
     </script>
 </body>
 </html>
-
